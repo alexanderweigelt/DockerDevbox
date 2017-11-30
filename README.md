@@ -1,6 +1,6 @@
 # Devbox
 
-Devbox on PHP 7.1 Apache using [docker][].
+Devbox on PHP 7.1 Apache using docker.
 
 ## Prerequisites
 
@@ -44,6 +44,10 @@ Devbox on PHP 7.1 Apache using [docker][].
         # curl localhost:8080
 
     It should print `Hello World` to the console.
+    
+## Webroot
+
+-   Add sources to `htdocs` folder.
 
 ## Links
 

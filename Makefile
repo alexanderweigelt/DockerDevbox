@@ -23,10 +23,16 @@ build:
 run:
 	docker-compose up -d
 
+down:
+	docker-compose down
+
+bash:
+	docker exec -ti devbox bash
+
 test:
 	curl localhost
 
-clean:
+clean: down
 	docker rm devbox
 
 .PHONY: build run test clean
