@@ -2,8 +2,6 @@ version: "3"
 services:
   db:
     image: mysql
-    ports:
-      - 3306:3306
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment:
@@ -15,7 +13,7 @@ services:
   web:
     image: alexanderweigelt/devbox
     links:
-      - db:mysql
+      - "db:mysql"
     ports:
       - 80:80
       - 443:443

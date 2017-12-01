@@ -27,5 +27,11 @@ RUN pecl install redis-3.1.4 \
     && pecl install xdebug-2.5.0 \
     && docker-php-ext-enable redis xdebug
 
-# Install MySQL Client
-RUN apt-get install -y mysql-client
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
+    apt-get install -y nodejs build-essential
+
+# Install Grunt CLI
+RUN npm install -g grunt-cli
+
+CMD echo "Build is succesful!" | wc -

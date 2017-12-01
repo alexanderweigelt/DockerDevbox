@@ -12,7 +12,7 @@ default:
     make down                                 Downs all docker containers.\n\
     make update                               Updates composer packages.\n\
     make bash                                 Starts an interactive bash session.\n\
-    make pull                                 Pulls images associated with a service defined in a docker-compose.yml.\n\
+    make test                                 Tested started localhost.\n\
     make build                                Builds a Docker Image defined in Dockerfile\n\
     \n\
 	"
@@ -22,6 +22,8 @@ build:
 
 run:
 	docker-compose up -d
+# synonym to run
+up: run
 
 down:
 	docker-compose down
@@ -33,6 +35,6 @@ test:
 	curl localhost
 
 clean: down
-	docker rm devbox
+	docker rmi $(docker images -f dangling=true -q)
 
-.PHONY: build run test clean
+.PHONY: build run test clean down
