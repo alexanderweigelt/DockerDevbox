@@ -1,5 +1,6 @@
 *~
 .DS_Store
 .idea/
-.env
 data/mysql/*
+/htdocs/
+!/htdocs/index.html

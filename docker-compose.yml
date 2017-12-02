@@ -3,21 +3,24 @@ services:
   db:
     image: mysql
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ${PATH_MYSQL}:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+    container_name: ${CONTAINER_NAME_DB}
+    restart: always
   web:
-    image: alexanderweigelt/devbox
+    image: ${REPOSITORY}
     links:
       - "db:mysql"
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./htdocs:/var/www/html
-      - ./data/etc/extra/httpd-vhosts.conf:/etc/apache2/sites-enabled/httpd-vhosts.conf
-    container_name: devbox
+      - ${PATH_HTML}:/var/www/html
+      - ${PATH_VHOST_CONF}:/etc/apache2/sites-enabled/httpd-vhosts.conf
+    container_name: ${CONTAINER_NAME_WEB}
+    restart: always

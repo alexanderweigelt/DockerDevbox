@@ -1,34 +1,60 @@
 # Devbox
 
-Devbox on PHP 7.1 Apache using docker.
+Devbox based on Apache PHP 7.1 using docker.
 
 ## Prerequisites
-
--   Rename .env.sample to .env
-
--   Save settings
-
-## Getting Started
 
 -   Install docker:
 
         https://docs.docker.com/engine/installation/
 
+-   Install `curl`:
+
+        sudo apt-get install curl
+
+### Settings
+
+-   Open .env file in editor
+
+-   Change and save settings
+
+## Getting Started
+
+Use the make command to control the Application
+
+-   Get help (list all commands):
+
+        make
+        
+        # :: Tasks - Devbox
+        # make run                                  Builds and ups all docker containers.
+        # make down                                 Downs all docker containers.
+        # make clean                                Docker cleanup container, images and volumes.
+        # make bash                                 Starts an interactive bash session.
+        # make mysql                                Starts an interactive mysql session.
+        # make test                                 Tested started localhost.
+        # make build                                Builds a Docker Image defined in Dockerfile.
+        # make push                                 You can always push a new image to your repository.
+
 -   Build docker image:
 
         make build
+        
         # docker build -t alexanderweigelt/devbox .
 
 -   Run app:
 
         make run
+        
         # docker-compose up -d
 
--   Install `curl`:
+-   Test app using the port in previous step:
 
-        sudo apt-get install curl
+        make test
+        
+        # curl localhost
 
--   Get mapped port (last column) using, e.g. 49160:
+-   Get mapped port (last column) using:
 
         docker ps
 
@@ -36,21 +62,30 @@ Devbox on PHP 7.1 Apache using docker.
         > ID                  IMAGE                     COMMAND                  CREATED             STATUS              PORTS
         > 2703c7504513        alexanderweigelt/devbox   "docker-php-entryp..."   8 hours ago         Up 8 hours          80/tcp, 0.0.0.0:8080->8080/tcp   devbox
 
--   Test app using the port in previous step, e.g. 49160:
-
-        curl localhost:<port>
-
-        # Example
-        # curl localhost:8080
-
     It should print `Hello World` to the console.
     
-## Webroot
+### Webroot
 
 -   Add sources to `htdocs` folder.
 
+-   Open your browser and call address [http://localhost](http://localhost)
+
+### Database
+
+-   *Note: The database host is* `db`
+
+### Installed Tools
+
+1.  Composer
+
+2.  Xdebug
+
+3.  Node.js
+
+4.  Grunt CLI
+
 ## Links
 
--   [docker](http://docker.io)
+-   [docker](https://cloud.docker.com/swarm/alexanderweigelt/repository/docker/alexanderweigelt/devbox/general)
 
 -   [GitHub](https://github.com/alexanderweigelt/Docker-devbox)
