@@ -34,4 +34,4 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
 # Install Grunt CLI
 RUN npm install -g grunt-cli
 
-CMD echo "Build is succesful!" | wc -
+COPY ./data/etc/extra/httpd-vhosts.conf /etc/apache2/sites-enabled/
