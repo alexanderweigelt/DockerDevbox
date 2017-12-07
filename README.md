@@ -1,6 +1,6 @@
 # Devbox
 
-Devbox based on Apache PHP 7.1 using docker.
+Devbox based on Apache PHP 7.1 using docker. Use it only as a develop environment!
 
 ## Prerequisites
 
@@ -53,7 +53,8 @@ Use the make command to control the Application
         make test
         
         # curl localhost
-
+    It should print `Hello World` to the console.
+    
 -   Get mapped port (last column) using:
 
         docker ps
@@ -61,8 +62,6 @@ Use the make command to control the Application
         > # Example
         > ID                  IMAGE                     COMMAND                  CREATED             STATUS              PORTS
         > 2703c7504513        alexanderweigelt/devbox   "docker-php-entryp..."   8 hours ago         Up 8 hours          80/tcp, 0.0.0.0:8080->8080/tcp   devbox
-
-    It should print `Hello World` to the console.
     
 ### Webroot
 
@@ -71,6 +70,8 @@ Use the make command to control the Application
 -   Open your browser and call address [http://localhost](http://localhost)
 
 ### Database
+
+-   Get database credentials from .env file
 
 -   *Note: The database host is* `db`
 

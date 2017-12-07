@@ -34,4 +34,8 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
 # Install Grunt CLI
 RUN npm install -g grunt-cli
 
-COPY ./data/etc/extra/httpd-vhosts.conf /etc/apache2/sites-enabled/
+# vhost conf
+COPY ${PATH_VHOST_CONF} /etc/apache2/sites-enabled/
+
+RUN a2enmod rewrite \
+    && service apache2 restart
