@@ -34,6 +34,9 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
 # Install Grunt CLI
 RUN npm install -g grunt-cli
 
+# PHP ini
+COPY ${PATH_PHP_INI} /usr/local/etc/php/php.ini
+
 # vhost conf
 COPY ${PATH_VHOST_CONF} /etc/apache2/sites-enabled/
 
