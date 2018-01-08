@@ -4,4 +4,4 @@ docker rm -vf $(docker ps -a) 2>/dev/null || echo "No stopped containers to remo
 
 docker rmi -f $(docker images) 2>/dev/null || echo "No untagged images to delete."
 
-docker volume rm $(docker volume ls) 2>/dev/null || echo "No volumes to delete."
+docker volume rm -f $(docker volume ls) 2>/dev/null || echo "No volumes to delete."

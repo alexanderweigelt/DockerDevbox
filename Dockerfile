@@ -18,14 +18,28 @@ RUN apt-get install -y \
         libxml2-dev \
         libxslt-dev \
         libicu-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt pdo_mysql opcache json calendar bcmath mbstring soap xsl zip intl \
+        libyaml-dev \
+    && docker-php-ext-install -j$(nproc) \
+        iconv \
+        mcrypt \
+        pdo_mysql \
+        opcache \
+        json \
+        calendar \
+        bcmath \
+        mbstring \
+        soap \
+        xsl \
+        zip \
+        intl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
 # Install PECL extensions
 RUN pecl install redis-3.1.4 \
     && pecl install xdebug-2.5.0 \
-    && docker-php-ext-enable redis xdebug
+    && pecl install yaml-2.0.2 \
+    && docker-php-ext-enable redis xdebug yaml
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \
@@ -40,5 +54,6 @@ COPY ${PATH_PHP_INI} /usr/local/etc/php/php.ini
 # vhost conf
 COPY ${PATH_VHOST_CONF} /etc/apache2/sites-enabled/
 
+# enable mod_rewrite for Apache 2.2
 RUN a2enmod rewrite \
     && service apache2 restart
