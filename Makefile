@@ -6,6 +6,14 @@
 
 include .env
 
+# If the first argument is "run"...
+ifeq (run,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "run"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
+
 # Documentation
 default:
 	@echo "\n\
@@ -18,6 +26,8 @@ default:
     make test                                 Tested started localhost.\n\
     make build                                Builds a Docker Image defined in Dockerfile.\n\
     make push                                 You can always push a new image to your repository.\n\
+    make run <command> [OPTION]               Run bash command inside docker container.\n\
+                                              Examle: make run add-vhost yourdomain.com\n\
     \n\
 	"
 
@@ -27,10 +37,11 @@ build:
 push:
 	docker push ${REPOSITORY}:latest
 
-run:
+up:
 	docker-compose up -d
-# synonym to run
-up: run
+
+run:
+	docker exec -ti ${CONTAINER_NAME_WEB} bash $(RUN_ARGS)
 
 down:
 	docker-compose down
