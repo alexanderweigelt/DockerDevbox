@@ -21,7 +21,6 @@ services:
       - "443:443"
     volumes:
       - ${PATH_HTML}:/var/www/html
-      - ${PATH_VHOST_CONF}:/etc/apache2/sites-enabled/httpd-vhosts.conf
-#      - ${PATH_PHP_INI}:/usr/local/etc/php/php.ini
+      - ${PATH_LOGS}:/var/log
     container_name: ${CONTAINER_NAME_WEB}
     restart: always
