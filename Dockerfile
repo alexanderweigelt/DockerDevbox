@@ -20,7 +20,7 @@ RUN apt-get install -y \
         libicu-dev \
         libyaml-dev \
     && docker-php-ext-install -j$(nproc) \
-        iconv \
+        mysqli \
         mcrypt \
         pdo_mysql \
         opcache \
@@ -39,7 +39,10 @@ RUN apt-get install -y \
 RUN pecl install redis-3.1.4 \
     && pecl install xdebug-2.5.0 \
     && pecl install yaml-2.0.2 \
-    && docker-php-ext-enable redis xdebug yaml
+    && docker-php-ext-enable redis xdebug yaml \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash && \

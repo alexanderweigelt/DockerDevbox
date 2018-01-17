@@ -22,5 +22,7 @@ services:
     volumes:
       - ${PATH_HTML}:/var/www/html
       - ${PATH_LOGS}:/var/log
+    environment:
+      XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}} # Get you local IP address: ifconfig
     container_name: ${CONTAINER_NAME_WEB}
     restart: always
