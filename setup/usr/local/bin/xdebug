@@ -6,17 +6,18 @@ ini='/usr/local/etc/php/conf.d/xdebug.ini'
 # enable xdebug extension
 if ! [ -f $ini ]; then
 	docker-php-ext-enable xdebug
-	service apache2 reload
 	echo -e $"Xdebug is successful enabled\n"
 	php -v
+else
+    rm $ini
 fi
 
 # write ini file
-rm $ini
-echo "
-zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)
-xdebug.remote_enable=on
+echo "xdebug.remote_enable=on
 xdebug.remote_autostart=off
+xdebug.remote_log=/var/log/xdebug.log
 xdebug.remote_host=$ip" > $ini
+
+service apache2 reload
 
 echo -e $"\nXdebug ini file is created\n"
