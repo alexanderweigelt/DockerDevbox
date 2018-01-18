@@ -27,14 +27,21 @@ Use the make command to control the Application
         make
         
         # :: Tasks - Devbox
-        # make run                                  Builds and ups all docker containers.
+        # make up                                  Builds and ups all docker containers.
         # make down                                 Downs all docker containers.
         # make clean                                Docker cleanup container, images and volumes.
-        # make bash                                 Starts an interactive bash session.
-        # make mysql                                Starts an interactive mysql session.
-        # make test                                 Tested started localhost.
+        
+        # :: Tasks Deployment
         # make build                                Builds a Docker Image defined in Dockerfile.
         # make push                                 You can always push a new image to your repository.
+        
+        # :: Tasks Development
+        # make bash                                 Starts an interactive bash session.
+        # make mysql                                Starts an interactive mysql session.
+        # make run <command> [OPTION]               Run bash command inside docker container.
+                                                    Available commands:
+                                                         - make run add-vhost yourdomain.com
+                                                         - make run xdebug <your_ip>        
 
 -   Build docker image:
 
@@ -57,7 +64,7 @@ Use the make command to control the Application
     
 -   Get mapped port (last column) using:
 
-        docker ps
+        docker ps -a
 
         > # Example
         > ID                  IMAGE                     COMMAND                  CREATED             STATUS              PORTS

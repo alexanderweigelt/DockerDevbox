@@ -10,10 +10,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
-    container_name: ${CONTAINER_NAME_DB}
     restart: always
   web:
-    image: ${REPOSITORY}
+    image: ${REPOSITORY}:${TAG}
     links:
       - "db:mysql"
     ports:
@@ -22,7 +21,4 @@ services:
     volumes:
       - ${PATH_HTML}:/var/www/html
       - ${PATH_LOGS}:/var/log
-    environment:
-      XDEBUG_CONFIG: remote_host={{YOUR_IP_ADDRESS}} # Get you local IP address: ifconfig
-    container_name: ${CONTAINER_NAME_WEB}
     restart: always
