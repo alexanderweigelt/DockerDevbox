@@ -1,24 +1,36 @@
 version: "3"
 services:
   db:
-    image: mysql
+    image: mysql:${MYSQL_VERSION}
     volumes:
-      - ${PATH_MYSQL}:/var/lib/mysql
+      - db-data:/var/lib/mysql
+    networks:
+      - overlay
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+    ports:
+      - "3306:3306"
     restart: always
   web:
+    depends_on:
+      - db
     image: ${REPOSITORY}:${TAG}
-    links:
-      - "db:mysql"
+    networks:
+      - overlay
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ${PATH_HTML}:/var/www/html
-      - ${PATH_LOGS}:/var/log
+      - ./htdocs:/var/www/html:delegated
+      - ./data/logs:/var/log:delegated
     restart: always
+
+volumes:
+  db-data:
+
+networks:
+  overlay:
