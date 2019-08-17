@@ -5,3 +5,4 @@ data/mysql/*
 data/logs/
 /htdocs/
 !/htdocs/index.html
+docker-compose.override.yml

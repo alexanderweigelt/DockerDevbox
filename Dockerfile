@@ -6,7 +6,7 @@ MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 COPY setup/ /
 
 # using composer
-    RUN curl -sS https://getcomposer.org/installer | \
+    RUN curl -sS https://getcomposer.org/installer/ | \
     php -- --install-dir=/usr/bin/ --filename=composer \
     && apt-get update \
     && apt-get install -y \

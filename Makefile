@@ -42,10 +42,10 @@ default:
     "
 
 build:
-	docker build -t ${REPOSITORY}:${TAG} .
+	docker build -t alexanderweigelt/devbox .
 
 push:
-	docker push ${REPOSITORY}:${TAG}
+	docker push alexanderweigelt/devbox
 
 up:
 	docker-compose up -d
@@ -54,7 +54,7 @@ run:
 	docker-compose exec web bash -c '$(RUN_ARGS)'
 
 down:
-	docker-compose down -v
+	docker-compose down
 
 bash:
 	docker-compose exec web bash

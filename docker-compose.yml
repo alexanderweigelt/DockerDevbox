@@ -1,26 +1,19 @@
-version: "3"
+version: "3.5"
 services:
   db:
-    image: mysql:${MYSQL_VERSION}
+    image: mysql
     volumes:
       - db-data:/var/lib/mysql
-    networks:
-      - overlay
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     restart: always
+
   web:
+    image: alexanderweigelt/devbox
     depends_on:
       - db
-    image: ${REPOSITORY}:${TAG}
-    networks:
-      - overlay
     ports:
       - "80:80"
       - "443:443"
@@ -33,4 +26,5 @@ volumes:
   db-data:
 
 networks:
-  overlay:
+  default:
+    driver: bridge
