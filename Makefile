@@ -2,7 +2,7 @@
 #
 # @project    Docker devbox
 # @package    scripts
-# @author     Alexander Weigelt <alexander.weigelt@netresearch.de>
+# @author     Alexander Weigelt <webdesign@alexander-weigelt.de>
 
 include .env
 
@@ -23,7 +23,6 @@ default:
     :: Tasks - Devbox\n\
     make up                                   Builds and ups all docker containers.\n\
     make down                                 Downs all docker containers.\n\
-    make clean                                Docker cleanup container, images and volumes.\n\
     \n\
     :: Deployment\n\
     make build                                Builds a Docker Image defined in Dockerfile.\n\
@@ -38,37 +37,30 @@ default:
                                                  - make run xdebug $(IP)\n\
     :: Helper\n\
     make myip                                 Returns the primary IP address of the local machine.\n\
-    make test                                 Tested started localhost.\n\
     "
 
-build:
-	docker build -t alexanderweigelt/devbox .
+build: .env
+	@docker-compose build
 
-push:
-	docker push alexanderweigelt/devbox
+up: .env
+	@docker-compose up -d
+	@echo -e "\033[1;92m Docker containers ... UP AND RUNNING\033[0m\n"
 
-up:
-	docker-compose up -d
+run: .env
+	@docker-compose exec web bash -c '$(RUN_ARGS)'
 
-run:
-	docker-compose exec web bash -c '$(RUN_ARGS)'
+down: .env
+	@docker-compose down
+	@echo -e "\033[1;92m Docker containers ... DOWN\033[0m\n"
 
-down:
-	docker-compose down
+bash: .env
+	@echo "\033[1;31m Note: use ssh to connect to the toolbox.\033[0m\n"
+	@docker-compose exec web bash
 
-bash:
-	docker-compose exec web bash
-
-mysql:
-	docker-compose exec db bash
-
-test:
-	curl localhost
-
-clean:
-	sh docker_cleanup.sh
+mysql: .env
+	@docker-compose exec db bash
 
 myip:
 	@echo $(IP)
 
-.PHONY: build push up run down bash mysql test clean myip
+.PHONY: build up run down bash mysql myip

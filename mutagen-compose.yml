@@ -21,7 +21,7 @@ services:
     networks:
       default: { }
     volumes:
-      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
+      - code:${HTTP_PROJECT_ROOT}:rw
     env_file:
       - .env
   php:
@@ -57,3 +57,39 @@ volumes:
     driver: local
   code:
     driver: local
+
+x-mutagen:
+  sync:
+    defaults:
+      symlink:
+        mode: "posix-raw"
+      mode: "two-way-resolved"
+      permissions:
+        defaultFileMode: 0664
+        defaultDirectoryMode: 0775
+      configurationBeta:
+        permissions:
+          defaultOwner: "id:33"
+          defaultGroup: "id:33"
+    code:
+      alpha: ${COMPOSE_PROJECT_ROOT}
+      beta: "volume://code"
+      ignore:
+        vcs: true
+        paths:
+          - .idea
+          - .mutagen.*
+          - "*node_modules*"
+  forward:
+    database:
+      source: "tcp:localhost:${PORT_MYSQL}"
+      destination: "network://default:tcp:db:3306"
+    web:
+      source: "tcp::${PORT_HTTP}"
+      destination: "network://default:tcp:httpd:80"
+    mailhog:
+      source: "tcp::8025"
+      destination: "network://default:tcp:mailhog:8025"
+    ssh:
+      source: "tcp:localhost:${PORT_SSH}"
+      destination: "network://default:tcp:toolbox:22"
