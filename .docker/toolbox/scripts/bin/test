@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+phpcs_test()
+{
+    "phpcs" --standard="PSR12" --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
+}
+
+phpcs_fix()
+{
+    "phpcbf" --standard="PSR12" --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
+}
+
+phpcs_usage()
+{
+    echo "usage: phpcs [-h|--help]"
+    cat <<EOF
+Usage: phpcs [options] [command]
+
+Command
+    test  Text the source code.
+    fix   Automatically fix errors.
+
+Options:
+    -h|--help  Show this help screen
+EOF
+}
+
+##### Main
+while [[ "${1:-}" != "" ]]; do
+    case $1 in
+        test )              shift
+                            phpcs_test "$@"
+                            exit
+                            ;;
+        fix )               shift
+                            phpcs_fix "$@"
+                            exit
+                            ;;
+        -h | --help )       shift
+                            phpcs_usage
+                            exit 1
+                            ;;
+        * )                 phpcs_usage
+                            exit 1
+    esac
+    shift
+done
+
+phpcs_usage
+exit 1

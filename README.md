@@ -1,24 +1,21 @@
 # Devbox
 
-Devbox based on Apache PHP 7.1 using docker. Use it only as a develop environment!
+Devbox based on Apache PHP 8.1 using docker. Use it only as a develop environment!
 
-## Prerequisites
+## Dependencies
 
--   Install docker:
+-   Install docker: https://docs.docker.com/engine/installation/
 
-        https://docs.docker.com/engine/installation/
-
--   Install `curl`:
-
-        sudo apt-get install curl
-
-### Settings
-
--   Open .env file in editor
-
--   Change and save settings
 
 ## Getting Started
+
+### First time
+
+1. `cp .env.dist .env` and adapt application settings in .env file
+2. `make build` to build docker images
+3. `make up` to start the application
+
+### Daily work
 
 Use the make command to control the Application
 
@@ -29,11 +26,9 @@ Use the make command to control the Application
         # :: Tasks - Devbox
         # make up                                  Builds and ups all docker containers.
         # make down                                 Downs all docker containers.
-        # make clean                                Docker cleanup container, images and volumes.
         
         # :: Tasks Deployment
         # make build                                Builds a Docker Image defined in Dockerfile.
-        # make push                                 You can always push a new image to your repository.
         
         # :: Tasks Development
         # make bash                                 Starts an interactive bash session.
@@ -41,13 +36,12 @@ Use the make command to control the Application
         # make run <command> [OPTION]               Run bash command inside docker container.
                                                     Available commands:
                                                          - make run add-vhost yourdomain.com
-                                                         - make run xdebug <your_ip>        
-
+                                                         - make run xdebug <your_ip>
 -   Build docker image:
 
         make build
         
-        # docker build -t alexanderweigelt/devbox .
+        # docker-compose build
 
 -   Run app:
 
@@ -55,12 +49,11 @@ Use the make command to control the Application
         
         # docker-compose up -d
 
--   Test app using the port in previous step:
+-   Stop app:
 
-        make test
+        make down
         
-        # curl localhost
-    It should print `Hello World` to the console.
+        # docker-compose down
     
 -   Get mapped port (last column) using:
 
@@ -72,25 +65,55 @@ Use the make command to control the Application
     
 ### Webroot
 
--   Add sources to `htdocs` folder.
+-   Add sources to `app` folder.
 
 -   Open your browser and call address [http://localhost](http://localhost)
 
 ### Database
 
--   Get database credentials from .env file
+- Get database credentials from .env file
 
--   *Note: The database host is* `db`
+- *Note: The database host is* `db`
+
+### ssh/sftp
+
+* User: app
+* Password: app
+* Port: 2220 (get the port mapping from .env file)
+* Host: localhost
+
+`ssh -p2220 app@localhost`
 
 ### Installed Tools
 
-1.  Composer
+1. Composer
+2. Xdebug
+3. Node.js
+4. PHP CodeSniffer
+5. PHP-CS-Fixer
 
-2.  Xdebug
+### Mutagen.io support (optional)
 
-3.  Node.js
+Before we can start the application itself with mutagen.io, we have to install some tools.
 
-4.  Grunt CLI
+1. Homebrew: https://brew.sh/index_de CMD Tool for installations
+2. Docker for Mac: https://hub.docker.com/editions/community/docker-ce-desktop-mac/
+3. Mutagen.io https://mutagen.io/documentation/introduction/installation
+
+#### Install mutagen.io on MacOS
+
+Subscribe to the edge release channel (NOT RECOMMENDED!)
+
+If you want to use compose mutagen you have to install version 0.12.0-beta2
+
+(Status from 2020-11-01)
+
+`brew install mutagen-io/mutagen/mutagen-edge`
+
+## Known issues
+
+1. `mutagen-compose` is untested
+2. Run phpcs with make command does not work
 
 ## Links
 

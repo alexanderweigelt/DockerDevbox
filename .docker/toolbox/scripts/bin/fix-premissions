@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+chown -Rf www-data:www-data \
+    /var/www \
+    "${HTTP_PROJECT_ROOT}" \
+    /usr/local/etc/php/conf.d

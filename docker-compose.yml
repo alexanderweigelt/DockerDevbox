@@ -1,30 +1,63 @@
-version: "3.5"
-services:
-  db:
-    image: mysql
-    volumes:
-      - db-data:/var/lib/mysql
-    env_file:
-      - .env
-    ports:
-      - "3306:3306"
-    restart: always
-
-  web:
-    image: alexanderweigelt/devbox
-    depends_on:
-      - db
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./htdocs:/var/www/html:delegated
-      - ./data/logs:/var/log:delegated
-    restart: always
-
-volumes:
-  db-data:
+version: '3.7'
 
 networks:
   default:
-    driver: bridge
+
+services:
+  db:
+    image: ${COMPOSE_PROJECT_NAME}/mariadb:${IMAGE_TAG}
+    build:
+      context: .docker/mariadb
+    networks:
+      default: { }
+    ports:
+      - ${PORT_MYSQL}:3306
+    volumes:
+      - dbdata:/var/lib/mysql:rw
+    env_file:
+      - .env
+  httpd:
+    image: ${COMPOSE_PROJECT_NAME}/httpd:${IMAGE_TAG}
+    build:
+      context: .docker/httpd
+    networks:
+      default: { }
+    ports:
+      - ${PORT_HTTP}:80
+    volumes:
+      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
+    env_file:
+      - .env
+  php:
+    image: ${COMPOSE_PROJECT_NAME}/php:${IMAGE_TAG}
+    build:
+      context: .docker/php
+    networks:
+      default: { }
+    volumes:
+      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
+    env_file:
+      - .env
+  toolbox:
+    image: ${COMPOSE_PROJECT_NAME}/toolbox:${IMAGE_TAG}
+    build:
+      context: .docker/toolbox
+      args:
+        - compose_project_name=${COMPOSE_PROJECT_NAME}
+        - compose_image_tag=${IMAGE_TAG}
+        - http_project_root=${HTTP_PROJECT_ROOT}
+    networks:
+      default: { }
+    ports:
+      - ${PORT_SSH}:22
+    volumes:
+      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
+    depends_on:
+      - php
+      - db
+    env_file:
+      - .env
+
+volumes:
+  dbdata:
+    driver: local
