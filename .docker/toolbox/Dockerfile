@@ -1,7 +1,7 @@
 ARG compose_project_name
 ARG compose_image_tag
 
-FROM $compose_project_name/php:$compose_image_tag
+FROM $compose_project_name/devbox-php:$compose_image_tag
 
 MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 

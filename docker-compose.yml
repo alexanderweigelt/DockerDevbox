@@ -5,7 +5,7 @@ networks:
 
 services:
   db:
-    image: ${COMPOSE_PROJECT_NAME}/mariadb:${IMAGE_TAG}
+    image: ${COMPOSE_PROJECT_NAME}/devbox-db:${IMAGE_TAG}
     build:
       context: .docker/mariadb
     networks:
@@ -17,7 +17,7 @@ services:
     env_file:
       - .env
   httpd:
-    image: ${COMPOSE_PROJECT_NAME}/httpd:${IMAGE_TAG}
+    image: ${COMPOSE_PROJECT_NAME}/devbox-httpd:${IMAGE_TAG}
     build:
       context: .docker/httpd
     networks:
@@ -29,7 +29,7 @@ services:
     env_file:
       - .env
   php:
-    image: ${COMPOSE_PROJECT_NAME}/php:${IMAGE_TAG}
+    image: ${COMPOSE_PROJECT_NAME}/devbox-php:${IMAGE_TAG}
     build:
       context: .docker/php
     networks:
@@ -39,7 +39,7 @@ services:
     env_file:
       - .env
   toolbox:
-    image: ${COMPOSE_PROJECT_NAME}/toolbox:${IMAGE_TAG}
+    image: ${COMPOSE_PROJECT_NAME}/devbox-toolbox:${IMAGE_TAG}
     build:
       context: .docker/toolbox
       args:
