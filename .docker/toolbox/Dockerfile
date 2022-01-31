@@ -1,13 +1,14 @@
 ARG compose_project_name
+ARG compose_image_tag
 
-FROM $compose_project_name/php:1.0.0
+FROM $compose_project_name/php:$compose_image_tag
 
 MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 
 # Using composer
-RUN curl -sS https://getcomposer.org/installer | php -- --version=1.10.17 --install-dir=/usr/local/bin --filename=composer \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 # Install Node.js
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nano \
@@ -16,8 +17,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --version=1.10.17 --inst
         nodejs \
         openssh-server \
         mariadb-client \
-# Install Xdebug (but don't enable)
-    && pecl install -o -f xdebug \
 ## Creates a new user as www-data alias and adds it to the sudo group
 ## along with privileges to run sudo without password
     && adduser --disabled-password --uid 5577 --gecos "" --ingroup www-data app \
@@ -43,7 +42,6 @@ ARG http_project_root
 ENV HTTP_PROJECT_ROOT $http_project_root
 
 # Add setup
-ADD etc/php-xdebug.ini /usr/local/etc/php/conf.d/zz-xdebug-settings.ini
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 ADD scripts/ /home/app/
 

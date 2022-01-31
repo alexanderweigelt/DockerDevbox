@@ -6,11 +6,10 @@ MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 RUN apt-get update \
   && apt-get install -y \
     libfreetype6-dev \
-    libicu-dev \
     libjpeg62-turbo-dev \
-    libmcrypt-dev \
     libpng-dev \
-    libxslt1-dev \
+    libwebp-dev \
+    libxslt-dev \
     sendmail-bin \
     sendmail \
     sudo \
@@ -18,11 +17,10 @@ RUN apt-get update \
     libonig-dev \
 # Configure the gd library
   && docker-php-ext-configure \
-    gd --with-freetype --with-jpeg \
+    gd --with-freetype --with-jpeg --with-webp \
 # Install required PHP extensions
   && docker-php-ext-install \
     dom \
-    gd \
     intl \
     mbstring \
     pdo_mysql \
@@ -31,7 +29,8 @@ RUN apt-get update \
     soap \
     bcmath \
     pcntl \
-    sockets \
+# Install Xdebug (but don't enable)
+  && pecl install -o -f xdebug \
 # Set ulimit for the web server user
   && ulimit -s 65536 \
 # Setting the Timezone
@@ -39,7 +38,9 @@ RUN apt-get update \
   && ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
   && echo "Europe/Berlin" > /etc/timezone
 
+# Add setup
 ADD etc/mail.ini /usr/local/etc/php/conf.d/zz-mail.ini
+ADD etc/php-xdebug.ini /usr/local/etc/php/conf.d/zz-xdebug-settings.ini
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 
@@ -50,7 +51,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 ENV APP_ENV prod
 ENV UPLOAD_MAX_FILESIZE 64M
 
-ADD etc/php-fpm.ini /usr/local/etc/php/conf.d/zz-apo.ini
+ADD etc/php-fpm.ini /usr/local/etc/php/conf.d/zz-app.ini
 
 ADD etc/php-fpm.conf /usr/local/etc/
 

@@ -33,8 +33,7 @@ default:
     make mysql                                Starts an interactive mysql session.\n\
     make run <command> [OPTION]               Run bash command inside docker container.\n\
                                               Available commands:\n\
-                                                 - make run add-vhost yourdomain.com\n\
-                                                 - make run xdebug $(IP)\n\
+                                                 - make run test fix\n\
     :: Helper\n\
     make myip                                 Returns the primary IP address of the local machine.\n\
     "
@@ -47,7 +46,7 @@ up: .env
 	@echo -e "\033[1;92m Docker containers ... UP AND RUNNING\033[0m\n"
 
 run: .env
-	@docker-compose exec web bash -c '$(RUN_ARGS)'
+	@docker-compose exec toolbox bash -c '$(RUN_ARGS)'
 
 down: .env
 	@docker-compose down
@@ -55,7 +54,7 @@ down: .env
 
 bash: .env
 	@echo "\033[1;31m Note: use ssh to connect to the toolbox.\033[0m\n"
-	@docker-compose exec web bash
+	@docker-compose exec toolbox bash
 
 mysql: .env
 	@docker-compose exec db bash

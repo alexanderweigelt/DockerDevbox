@@ -4,9 +4,7 @@ Devbox based on Apache PHP 8.1 using docker. Use it only as a develop environmen
 
 ## Dependencies
 
--   Install docker:
-
-        https://docs.docker.com/engine/installation/
+-   Install docker: https://docs.docker.com/engine/installation/
 
 
 ## Getting Started
@@ -43,7 +41,7 @@ Use the make command to control the Application
 
         make build
         
-        # docker build -t alexanderweigelt/devbox .
+        # docker-compose build
 
 -   Run app:
 
@@ -81,20 +79,20 @@ Use the make command to control the Application
 
 * User: app
 * Password: app
-* Port: 2220 (or get the port mapping from .env file)
+* Port: 2220 (get the port mapping from .env file)
 * Host: localhost
 
 `ssh -p2220 app@localhost`
 
 ### Installed Tools
 
-1.  Composer
+1. Composer
+2. Xdebug
+3. Node.js
+4. PHP CodeSniffer
+5. PHP-CS-Fixer
 
-2.  Xdebug
-
-3.  Node.js
-
-### Optional Mutagen.io support
+### Mutagen.io support (optional)
 
 Before we can start the application itself with mutagen.io, we have to install some tools.
 
@@ -111,6 +109,11 @@ If you want to use compose mutagen you have to install version 0.12.0-beta2
 (Status from 2020-11-01)
 
 `brew install mutagen-io/mutagen/mutagen-edge`
+
+## Known issues
+
+1. `mutagen-compose` is untested
+2. Run phpcs with make command does not work
 
 ## Links
 

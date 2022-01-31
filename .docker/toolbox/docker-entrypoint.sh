@@ -1,14 +1,8 @@
 #!/bin/bash
 
-if [ "$APP_ENV" == "production" ]; then
+if [ "$APP_ENV" == "prod" ]; then
     echo 'Exit toolbox in production mode'
     exit 0
-fi
-
-# Configure Xdebug
-if [ "$XDEBUG_ENABLE" == "true" ]; then
-    docker-php-ext-enable xdebug
-    echo 'Xdebug enabled'
 fi
 
 chown -R www-data:www-data "${HTTP_PROJECT_ROOT}"

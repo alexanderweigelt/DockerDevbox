@@ -10,6 +10,8 @@ services:
       context: .docker/mariadb
     networks:
       default: { }
+    ports:
+      - ${PORT_MYSQL}:3306
     volumes:
       - dbdata:/var/lib/mysql:rw
     env_file:
@@ -20,6 +22,8 @@ services:
       context: .docker/httpd
     networks:
       default: { }
+    ports:
+      - ${PORT_HTTP}:80
     volumes:
       - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
     env_file:
@@ -31,7 +35,7 @@ services:
     networks:
       default: { }
     volumes:
-      - code:${HTTP_PROJECT_ROOT}:rw
+      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
     env_file:
       - .env
   toolbox:
@@ -40,20 +44,20 @@ services:
       context: .docker/toolbox
       args:
         - compose_project_name=${COMPOSE_PROJECT_NAME}
+        - compose_image_tag=${IMAGE_TAG}
         - http_project_root=${HTTP_PROJECT_ROOT}
     networks:
       default: { }
+    ports:
+      - ${PORT_SSH}:22
     volumes:
-      - code:${HTTP_PROJECT_ROOT}:rw
+      - ${COMPOSE_PROJECT_ROOT}:${HTTP_PROJECT_ROOT}:rw
+    depends_on:
+      - php
+      - db
     env_file:
       - .env
-  mailhog:
-    image: mailhog/mailhog
-    networks:
-      default: { }
 
 volumes:
   dbdata:
-    driver: local
-  code:
     driver: local

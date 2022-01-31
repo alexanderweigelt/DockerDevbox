@@ -3,12 +3,12 @@ set -euo pipefail
 
 phpcs_test()
 {
-    "phpcs" --standard=PSR12 --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
+    "phpcs" --standard="PSR12" --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
 }
 
 phpcs_fix()
 {
-    "phpcbf" --standard=PSR12 --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
+    "phpcbf" --standard="PSR12" --basepath="${HTTP_PROJECT_ROOT}" "${HTTP_PROJECT_ROOT}/app" "$@"
 }
 
 phpcs_usage()
@@ -19,7 +19,7 @@ Usage: phpcs [options] [command]
 
 Command
     test  Text the source code.
-    fix   Automatical fix errors.
+    fix   Automatically fix errors.
 
 Options:
     -h|--help  Show this help screen
