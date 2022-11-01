@@ -8,7 +8,7 @@ MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 # Using composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 # Install Node.js
-    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_17.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nano \

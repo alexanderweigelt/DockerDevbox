@@ -1,3 +1,3 @@
-FROM mariadb:10.7
+FROM mariadb
 
 MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
