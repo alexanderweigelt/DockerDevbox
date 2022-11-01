@@ -24,7 +24,7 @@ Use the make command to control the Application
         make
         
         # :: Tasks - Devbox
-        # make up                                  Builds and ups all docker containers.
+        # make up                                   Builds and ups all docker containers.
         # make down                                 Downs all docker containers.
         
         # :: Tasks Deployment
@@ -33,6 +33,8 @@ Use the make command to control the Application
         # :: Tasks Development
         # make bash                                 Starts an interactive bash session.
         # make mysql                                Starts an interactive mysql session.
+        # make make phpcs                           Runs PHP_CodeSniffer to detect and fix violations of a defined set
+                                                    of coding standards.
         # make run <command> [OPTION]               Run bash command inside docker container.
                                                     Available commands:
                                                          - make run add-vhost yourdomain.com
