@@ -8,7 +8,7 @@ MAINTAINER Alexander Weigelt <webdesign@alexander-weigelt.de>
 # Using composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 # Install Node.js
-    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_17.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nano \
@@ -35,6 +35,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && chmod +x /usr/local/bin/phpcs \
     && curl -sS -L https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/latest/download/php-cs-fixer.phar -o /usr/bin/php-cs-fixer \
     && chmod +x /usr/bin/php-cs-fixer \
+# Install phpcbf
+    && curl -L https://github.com/squizlabs/PHP_CodeSniffer/releases/latest/download/phpcbf.phar > /usr/local/bin/phpcbf \
+    && chmod +x /usr/local/bin/phpcbf \
 # Finally clean caches
     && rm -rf /var/cache/apk/* /var/tmp/* /tmp/*
 

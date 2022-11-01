@@ -1,6 +1,6 @@
 # Devbox
 
-Devbox based on Apache PHP 8.1 using docker. Use it only as a develop environment!
+Devbox based on Apache PHP 8.1 using docker. Use it only as develop environment!
 
 ## Dependencies
 
@@ -24,7 +24,7 @@ Use the make command to control the Application
         make
         
         # :: Tasks - Devbox
-        # make up                                  Builds and ups all docker containers.
+        # make up                                   Builds and ups all docker containers.
         # make down                                 Downs all docker containers.
         
         # :: Tasks Deployment
@@ -33,6 +33,8 @@ Use the make command to control the Application
         # :: Tasks Development
         # make bash                                 Starts an interactive bash session.
         # make mysql                                Starts an interactive mysql session.
+        # make make phpcs                           Runs PHP_CodeSniffer to detect and fix violations of a defined set
+                                                    of coding standards.
         # make run <command> [OPTION]               Run bash command inside docker container.
                                                     Available commands:
                                                          - make run add-vhost yourdomain.com
@@ -92,28 +94,27 @@ Use the make command to control the Application
 4. PHP CodeSniffer
 5. PHP-CS-Fixer
 
-### Mutagen.io support (optional)
+#### XDEBUG
 
-Before we can start the application itself with mutagen.io, we have to install some tools.
+*Settings for MacOS (.env)*
 
-1. Homebrew: https://brew.sh/index_de CMD Tool for installations
-2. Docker for Mac: https://hub.docker.com/editions/community/docker-ce-desktop-mac/
-3. Mutagen.io https://mutagen.io/documentation/introduction/installation
+```
+XDEBUG_MODE=develop,debug
+XDEBUG_IDEKEY=PHPSTORM
+XDEBUG_CLIENT_HOST=host.docker.internal
+XDEBUG_CLIENT_PORT=9006
+```
 
-#### Install mutagen.io on MacOS
+*Configure PhpStorm*
 
-Subscribe to the edge release channel (NOT RECOMMENDED!)
-
-If you want to use compose mutagen you have to install version 0.12.0-beta2
-
-(Status from 2020-11-01)
-
-`brew install mutagen-io/mutagen/mutagen-edge`
-
-## Known issues
-
-1. `mutagen-compose` is untested
-2. Run phpcs with make command does not work
+1. set port for xdebug `Preferences > Languages & Frameworks > PHP > Debug` Xdebug: Debug port = 9000 (same like `XDEBUG_CLIENT_PORT`)
+2. configure a configuration in the toolbar
+   - use PHP remote Debug
+   - add a server to your domain (without protocoll like http:// or https://)
+   - set port for http / https (not the xdebug port here)
+   - select Debugger: Xdebug
+   - if needed: set path mappings
+3. set Ide key to `PHPSTORM`
 
 ## Links
 

@@ -11,7 +11,6 @@
 !/.env.dist
 !/.gitignore
 !/docker-compose.yml
-!/mutagen-compose.yml
 !/Makefile
 !/README.md
 !/app

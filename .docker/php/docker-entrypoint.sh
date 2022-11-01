@@ -6,10 +6,4 @@ if [ "$SENDMAIL_ENABLE" == "true" ]; then
     echo 'Sendmail started'
 fi
 
-# Configure Xdebug
-if [ "$XDEBUG_ENABLE" == "true" ]; then
-    docker-php-ext-enable xdebug
-    echo 'Xdebug enabled'
-fi
-
 exec "$@"
