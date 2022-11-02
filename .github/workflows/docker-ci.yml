@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
     # Publish tags as releases.
     tags: [ '*.*.*' ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -24,8 +26,13 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build images
-        run: make build
+      - name: Build images and start containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
 
-      - name: Run check (Start containers)
-        run: make up
+      - name: Push containers into the container registry
+        if: github.event_name != 'pull_request'
+        run: docker-compose -f "docker-compose.yml" push
+
+      - name: Stop all running containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down -v
