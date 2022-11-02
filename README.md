@@ -96,25 +96,16 @@ Use the make command to control the Application
 
 #### XDEBUG
 
-*Settings for MacOS (.env)*
-
-```
-XDEBUG_MODE=develop,debug
-XDEBUG_IDEKEY=PHPSTORM
-XDEBUG_CLIENT_HOST=host.docker.internal
-XDEBUG_CLIENT_PORT=9006
-```
-
 *Configure PhpStorm*
 
-1. set port for xdebug `Preferences > Languages & Frameworks > PHP > Debug` Xdebug: Debug port = 9000 (same like `XDEBUG_CLIENT_PORT`)
-2. configure a configuration in the toolbar
+1. Set port for xdebug `Preferences > Languages & Frameworks > PHP > Debug` Xdebug: Debug port = 9006 (same like `XDEBUG_CLIENT_PORT`)
+2. Configure a configuration in the toolbar
    - use PHP remote Debug
-   - add a server to your domain (without protocoll like http:// or https://)
+   - add a server to your domain (without protocol like http:// or https://)
    - set port for http / https (not the xdebug port here)
    - select Debugger: Xdebug
    - if needed: set path mappings
-3. set Ide key to `PHPSTORM`
+3. Set Ide key to `PHPSTORM`
 
 ## Links
 

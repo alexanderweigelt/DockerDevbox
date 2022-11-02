@@ -39,8 +39,11 @@ default:
     make myip                                 Returns the primary IP address of the local machine.\n\
     "
 
+# Note: Build the main production environment first.
+# Runs the build of the toolbox last because it requires a php image with the current tag.
 build: .env
-	@docker-compose build
+	@docker-compose build php db httpd --no-cache --pull
+	@docker-compose build toolbox --no-cache
 
 up: .env
 	@docker-compose up -d
@@ -71,4 +74,4 @@ phpcbf: .env
 myip:
 	@echo $(IP)
 
-.PHONY: build up run down bash mysql myip
+.PHONY: build up run down bash mysql myip phpcbf phpcs
