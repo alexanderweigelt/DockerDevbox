@@ -1,0 +1,31 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ "master" ]
+    # Publish tags as releases.
+    tags: [ '*.*.*' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure
+        run: cp .env.dist .env
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build images
+        run: make build
+
+      - name: Run check (Start containers)
+        run: make up
