@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build images
-        run: make build
+        run: docker-compose -f "docker-compose.yml" --no-cache --pull build php db httpd
 
       - name: Run check (Start containers)
         run: make up
